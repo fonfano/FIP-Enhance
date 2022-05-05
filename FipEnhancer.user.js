@@ -11,7 +11,7 @@
 // Remove uggly play buttons
 
 // Historique
-// 05/05/2022   0.4.1  Correction : Adaptation aux nouveaux nom des boutons
+// 05/05/2022   0.4.1  Correction : Adaptation au nouveau nom des boutons
 // 05/04/2022   0.4    Upgrade  Pour nouveau site FIP
 // 05/02/2022   0.3    Upgrade  Remove all uggly play buttons
 // 25/01/2022   0.2    Upgrade  Remove uggly play button on art
