@@ -19,8 +19,7 @@
 
 
 setTimeout(() => {     
-  
-                   
+         
   document.querySelector("body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-qnall9 > div > div:nth-child(1) > div > div > div > div.CardWebRadio-playButton.svelte-msxzte").style.display = "none";
   document.querySelector("body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-qnall9 > div > div:nth-child(2) > div > div > div > div.CardWebRadio-playButton.svelte-msxzte").style.display = "none";
   document.querySelector("body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-qnall9 > div > div:nth-child(3) > div > div > div > div.CardWebRadio-playButton.svelte-msxzte").style.display = "none";
