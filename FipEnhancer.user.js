@@ -3,7 +3,7 @@
 // @namespace   github.com/fonfano
 // @match       https://www.radiofrance.fr/*
 // @grant       none
-// @version     0.5.3
+// @version     0.5.4
 // @author      Lt Ripley
 // @description 07/01/2022, 11:33:14
 // ==/UserScript==
@@ -11,6 +11,7 @@
 // Remove uggly play buttons, raise lower fip radios sections
 
 // Historique
+// 26/08/2022   0.5.4   Fix     :  For 2 new radios and new buttons names (one more time !)
 // 26/08/2022   0.5.3   Fix     :  For new buttons names (one more time !)
 // 01/08/2022   0.5.2   Fix     :  For new buttons names (one more time !)
 // 31/07/2022   0.5.1   Fix     :  For new buttons names
@@ -23,7 +24,7 @@
 
 
 // Options
-let delay = 2500;              // Time (in MS) before the script runs (wait the page to be fully loaded).  Increase if necessary.
+let delay = 2500;              // Time (in MS) before the script runs (waits the page to be fully loaded).  Increase if necessary.
 let raiseFipSections = true;   // Raise a little bit the lower FIP radios sections, to be able to read the text, especialy in case of MS Windows 125% display scale
 let height = "480px";          // Height (decrease to raise) 
 // End of options
@@ -32,11 +33,12 @@ let height = "480px";          // Height (decrease to raise)
 
 setTimeout(() => {   
   
-  for (let i=1 ; i < 9 ; i++)  {
-                      
-    let playButton = "body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-109jvl7 > div > div:nth-child(";
+  for (let i=1 ; i < 11 ; i++)  {               
+    
+    let playButton = "body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-enrlw0 > div > div:nth-child(";
     playButton += i.toString();
     playButton += ") > div > div > div > div.CardWebRadio-playButton.svelte-1wsgm83";
+                      
     
     document.querySelector(playButton).style.display = "none";
   }
