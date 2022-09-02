@@ -9,7 +9,6 @@
 // ==/UserScript==
 
 
-
 // Historique
 // 02/09/2022   0.6     Upgrade :  Colorize the currently played radio
 // 26/08/2022   0.5.4   Fix     :  For 2 new radios and new buttons names (one more time !)
@@ -22,6 +21,7 @@
 // 05/02/2022   0.3     Upgrade :  Remove all uggly play buttons
 // 25/01/2022   0.2     Upgrade :  Remove uggly play button on art
 // 07/01/2022   0.1     Creation
+
 
 
 // Options
@@ -50,12 +50,16 @@ setTimeout(() => {
   
   setInterval(colorRadio, 1000);
   
+    
 }, delay);
 
 
+
+// En cours de dev : mettre en couleur la rdaio jouée
+
 function colorRadio() {
    
-  var textRadioLue = document.querySelector("#player > div.media.svelte-4b2113 > span").firstChild.data;
+  var textRadioLue = document.querySelector("#player > div.media.svelte-4b2113 > span").firstChild.data;  // obtenir texte de la radio lue en bas a gauche (innerHTML donne 5 lignes de trucs :/ )
                                             
   console.log(textRadioLue);
   var radioNumber=0;                                            
@@ -110,22 +114,54 @@ function colorRadio() {
   
   console.log(radioNumber);
   
+  
   for (var i = 1 ; i < 11 ; i++)  {
 
-    let radioLueToColor = "body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-enrlw0 > div > div:nth-child(";
-    radioLueToColor += i.toString();
-    radioLueToColor += ") > div > div > a > div";
-    document.querySelector(radioLueToColor).style.backgroundColor = "#2E2E2E";
+    let radioToColor = "body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-enrlw0 > div > div:nth-child(";
+    // entier : body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-enrlw0 > div > div:nth-child(4) > div > div > a > div
+    radioToColor += i.toString();
+    radioToColor += ") > div > div > a > div";
+    document.querySelector(radioToColor).style.backgroundColor = "#2E2E2E";
     if (radioNumber == i)  {
-      document.querySelector(radioLueToColor).style.backgroundColor = "blue";
+      document.querySelector(radioToColor).style.backgroundColor = "blue";
     }
     
-  }
-  
-  
-  let radioLueToColor = "body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-enrlw0 > div > div:nth-child(";
-  radioLueToColor += radioNumber.toString();
-  radioLueToColor += ") > div > div > a > div";
-  document.querySelector(radioLueToColor).style.backgroundColor = "blue";   
+  }   
     
 }
+
+
+/*
+function observe()  {
+  
+  console.log("Appel observe");
+  let elementToObserve2 = document.querySelector("body > div:nth-child(3) > footer > div.StickyPlayer-wrapper.svelte-1o84z2t");
+  //let elementToObserve2 = document.querySelector("#player > div.media.svelte-4b2113");
+    let observer2 = new MutationObserver(colorRadio); // déclaration avec appel fonction
+
+    let options2 = {
+      childList: true,
+      attributes: true,
+      characterData: true,
+      subtree: true
+
+    };
+
+    observer2.observe(elementToObserve2, options2);
+  
+}
+*/
+
+
+/* OLD fonctionne
+  let radioToColor = "body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-enrlw0 > div > div:nth-child(4) > div > div > a > div";
+  document.querySelector("body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-enrlw0 > div > div:nth-child(4) > div > div > a > div").style.backgroundColor = "blue";
+  document.querySelector(radioToColor).style.backgroundColor = "blue";
+  */
+  
+  //radioToColor.style.backgroundColor = "blue";
+  
+  /* Fonctionne 
+  let radioToColor = "body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-enrlw0 > div > div:nth-child(4) > div > div > a > div";
+  document.querySelector(radioToColor).style.backgroundColor = "blue";
+  */
