@@ -5,13 +5,13 @@
 // @grant       none
 // @version     0.6
 // @author      Lt Ripley
-// @description Remove uggly play buttons, raise lower fip radios sections
+// @description Remove uggly play buttons, raise lower fip radios sections, colorize currently played radio
 // ==/UserScript==
 
 
 
 // Historique
-// 02/09/2022   0.6     Upgrade :  Color the currently played radio
+// 02/09/2022   0.6     Upgrade :  Colorize the currently played radio
 // 26/08/2022   0.5.4   Fix     :  For 2 new radios and new buttons names (one more time !)
 // 26/08/2022   0.5.3   Fix     :  For new buttons names (one more time !)
 // 01/08/2022   0.5.2   Fix     :  For new buttons names (one more time !)
