@@ -38,8 +38,7 @@ setTimeout(() => {
     
     let playButton = "body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-enrlw0 > div > div:nth-child(";
     playButton += i.toString();
-    playButton += ") > div > div > div > div.CardWebRadio-playButton.svelte-1wsgm83";
-                      
+    playButton += ") > div > div > div > div.CardWebRadio-playButton.svelte-1wsgm83";     
     
     document.querySelector(playButton).style.display = "none";
   }
@@ -49,13 +48,10 @@ setTimeout(() => {
   }       
   
   setInterval(colorRadio, 1000);
-  
     
 }, delay);
 
 
-
-// En cours de dev : mettre en couleur la rdaio jouée
 
 function colorRadio() {
    
@@ -113,7 +109,6 @@ function colorRadio() {
   }
   
   console.log(radioNumber);
-  
   
   for (var i = 1 ; i < 11 ; i++)  {
 
