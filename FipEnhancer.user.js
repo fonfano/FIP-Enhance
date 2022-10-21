@@ -3,12 +3,13 @@
 // @namespace   github.com/fonfano
 // @match       https://www.radiofrance.fr/*
 // @grant       none
-// @version     0.7
+// @version     0.7.1
 // @author      Lt Ripley
 // @description Remove uggly play buttons, raise lower fip radios sections, colorize currently played radio
 // ==/UserScript==
 
 // Historique
+// 21/10/2022   0.7.1   Fix     :  For new elements names (one more time !)
 // 25/09/2022   0.7     Fix     :  For new elements names (one more time !)
 // 02/09/2022   0.6     Upgrade :  Colorize the currently played radio
 // 26/08/2022   0.5.4   Fix     :  For 2 new radios and new buttons names (one more time !)
@@ -23,17 +24,17 @@
 // 07/01/2022   0.1     Creation
 
 // Options
-let delay = 2500;              // Time (in MS) before the script runs (waits the page to be fully loaded).  Increase if necessary.
+let delay = 2500;                 // Time (in MS) before the script runs (waits the page to be fully loaded).  Increase if necessary.
 let raiseRadiosSections = true;   // Raises a little bit the lower FIP radios sections, to be able to read the text, especialy in case of MS Windows 125% display scale
-let height = "400px";          // Height (decrease to raise)
+// let height = "480px";          // Height (decrease to raise).  Deprecated
+let scrollValue = 70;             // scroll (pixels)
 // End of options
-
 
 setTimeout(() => {
 
   if (raiseRadiosSections)  {
+    window.scroll(0, scrollValue); // x,y en pixels
     //document.querySelector("body > div > main > section.Home-coverRadio > div").style.maxHeight = height;  // fonctionne mal a present
-    window.scroll(0, 40); // x,y en pixels
   }
 
   setInterval(colorRadio, 1000);
@@ -42,7 +43,7 @@ setTimeout(() => {
 
     let playButton = "body > div > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-18716dr > div > div:nth-child(";
     playButton += i.toString();
-    playButton += ") > div > div > div > div.CardWebRadio-playButton.svelte-1wsgm83";
+    playButton += ") > div > div > div > div.CardWebRadio-playButton.svelte-clwp9j";
 
     document.querySelector(playButton).style.display = "none";
   }
@@ -52,7 +53,7 @@ setTimeout(() => {
 
 function colorRadio() {
 
-  var textRadioLue = document.querySelector("#player > div.media.svelte-9basf2 > span").firstChild.data;  // obtenir texte de la radio lue en bas a gauche (innerHTML donne 5 lignes de trucs :/ )
+  var textRadioLue = document.querySelector("#player > div.media.svelte-anqoab > span").firstChild.data;  // obtenir texte de la radio lue en bas a gauche (innerHTML donne 5 lignes de trucs :/ )
 
   console.log(textRadioLue);
   var radioNumber=0;
@@ -123,11 +124,6 @@ function colorRadio() {
 }  // colorRadio
 
 
-
-
-
-
-
 /* OLD
 
 function observe()  {
@@ -157,12 +153,10 @@ function observe()  {
     playButton += i.toString();
     playButton += ") > div > div > div > div.CardWebRadio-playButton.svelte-1wsgm83";
 
-
     let radioToColor = "body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-enrlw0 > div > div:nth-child(";
     // entier : body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-enrlw0 > div > div:nth-child(4) > div > div > a > div
     radioToColor += i.toString();
     radioToColor += ") > div > div > a > div";
-
 
   let radioToColor = "body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-enrlw0 > div > div:nth-child(4) > div > div > a > div";
   document.querySelector("body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-enrlw0 > div > div:nth-child(4) > div > div > a > div").style.backgroundColor = "blue";
