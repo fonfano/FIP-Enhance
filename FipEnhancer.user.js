@@ -3,12 +3,13 @@
 // @namespace   github.com/fonfano
 // @match       https://www.radiofrance.fr/*
 // @grant       none
-// @version     0.7.1
+// @version     0.7.2
 // @author      Lt Ripley
 // @description Remove uggly play buttons, raise lower fip radios sections, colorize currently played radio
 // ==/UserScript==
 
 // Historique
+// 01/11/2022   0.7.2   Fix     :  For new elements names (one more time !)
 // 21/10/2022   0.7.1   Fix     :  For new elements names (one more time !)
 // 25/09/2022   0.7     Fix     :  For new elements names (one more time !)
 // 02/09/2022   0.6     Upgrade :  Colorize the currently played radio
@@ -26,8 +27,8 @@
 // Options
 let delay = 2500;                 // Time (in MS) before the script runs (waits the page to be fully loaded).  Increase if necessary.
 let raiseRadiosSections = true;   // Raises a little bit the lower FIP radios sections, to be able to read the text, especialy in case of MS Windows 125% display scale
-// let height = "480px";          // Height (decrease to raise).  Deprecated
 let scrollValue = 70;             // scroll (pixels)
+// let height = "480px";          // Height (decrease to raise).  Deprecated
 // End of options
 
 setTimeout(() => {
@@ -53,7 +54,7 @@ setTimeout(() => {
 
 function colorRadio() {
 
-  var textRadioLue = document.querySelector("#player > div.media.svelte-anqoab > span").firstChild.data;  // obtenir texte de la radio lue en bas a gauche (innerHTML donne 5 lignes de trucs :/ )
+  var textRadioLue = document.querySelector("#player > div.media.svelte-1mel42u > span").firstChild.data;  // obtenir texte de la radio lue en bas a gauche (innerHTML donne 5 lignes de trucs :/ )
 
   console.log(textRadioLue);
   var radioNumber=0;
