@@ -3,12 +3,13 @@
 // @namespace   github.com/fonfano
 // @match       https://www.radiofrance.fr/*
 // @grant       none
-// @version     0.7.3
+// @version     0.7.4
 // @author      Lt Ripley
 // @description Remove uggly play buttons, raise lower fip radios sections, colorize currently played radio
 // ==/UserScript==
 
 // Historique
+// 18/11/2022   0.7.4   Fix     :  For new elements names (one more time !)
 // 13/11/2022   0.7.3   Fix     :  For new elements names (one more time !)
 // 01/11/2022   0.7.2   Fix     :  For new elements names (one more time !)
 // 21/10/2022   0.7.1   Fix     :  For new elements names (one more time !)
@@ -45,7 +46,7 @@ setTimeout(() => {
 
     let playButton = "body > div > main > section.Home-webradios.g-block-margin.svelte-qhvycx.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-18716dr > div > div:nth-child(";
     playButton += i.toString();
-    playButton += ") > div > div > div > div.CardWebRadio-playButton.svelte-j4h921";
+    playButton += ") > div > div > div > div.CardWebRadio-playButton.svelte-18cmek8";
 
     document.querySelector(playButton).style.display = "none";
   }
