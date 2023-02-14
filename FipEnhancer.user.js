@@ -3,12 +3,13 @@
 // @namespace   github.com/fonfano
 // @match       https://www.radiofrance.fr/*
 // @grant       none
-// @version     0.7.4
+// @version     0.7.5
 // @author      Lt Ripley
 // @description Remove uggly play buttons, raise lower fip radios sections, colorize currently played radio
 // ==/UserScript==
 
 // Historique
+// 14/02/2023   0.7.5   Fix     :  For new elements names (one more time !)
 // 18/11/2022   0.7.4   Fix     :  For new elements names (one more time !)
 // 13/11/2022   0.7.3   Fix     :  For new elements names (one more time !)
 // 01/11/2022   0.7.2   Fix     :  For new elements names (one more time !)
@@ -44,9 +45,9 @@ setTimeout(() => {
 
   for (let i=1 ; i < 11 ; i++)  {
 
-    let playButton = "body > div > main > section.Home-webradios.g-block-margin.svelte-qhvycx.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-18716dr > div > div:nth-child(";
+    let playButton = "body > div > main > section.Home-webradios.g-block-margin.svelte-1sumafo.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-spuns4 > div > div:nth-child(";
     playButton += i.toString();
-    playButton += ") > div > div > div > div.CardWebRadio-playButton.svelte-18cmek8";
+    playButton += ") > div > div > div > div.CardWebRadio-playButton.svelte-oxo44k";
 
     document.querySelector(playButton).style.display = "none";
   }
@@ -56,7 +57,7 @@ setTimeout(() => {
 
 function colorRadio() {
 
-  var textRadioLue = document.querySelector("#player > div.media.svelte-1mel42u > span").firstChild.data;  // obtenir texte de la radio lue en bas a gauche (innerHTML donne 5 lignes de trucs :/ )
+  var textRadioLue = document.querySelector("#player > div.media.svelte-1i7nef6 > span").firstChild.data;  // obtenir texte de la radio lue en bas a gauche (innerHTML donne 5 lignes de trucs :/ )
 
   console.log(textRadioLue);
   var radioNumber=0;
@@ -113,7 +114,7 @@ function colorRadio() {
 
   for (var i = 1 ; i < 11 ; i++)  {
 
-    let radioToColor = "body > div > main > section.Home-webradios.g-block-margin.svelte-qhvycx.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-18716dr > div > div:nth-child(";
+    let radioToColor = "body > div > main > section.Home-webradios.g-block-margin.svelte-1sumafo.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-spuns4 > div > div:nth-child(";
     radioToColor += i.toString();
     radioToColor += ") > div > div > a > div";
 
