@@ -3,12 +3,13 @@
 // @namespace   github.com/fonfano
 // @match       https://www.radiofrance.fr/*
 // @grant       none
-// @version     0.7.5
+// @version     0.8.0
 // @author      Lt Ripley
 // @description Remove uggly play buttons, raise lower fip radios sections, colorize currently played radio
 // ==/UserScript==
 
 // Historique
+// 20/02-2023   0.8.0   Redesign:  New way to select elements to allow working when new elements names appear.
 // 14/02/2023   0.7.5   Fix     :  For new elements names (one more time !)
 // 18/11/2022   0.7.4   Fix     :  For new elements names (one more time !)
 // 13/11/2022   0.7.3   Fix     :  For new elements names (one more time !)
@@ -38,26 +39,23 @@ setTimeout(() => {
 
   if (raiseRadiosSections)  {
     window.scroll(0, scrollValue); // x,y en pixels
-    //document.querySelector("body > div > main > section.Home-coverRadio > div").style.maxHeight = height;  // fonctionne mal a present
   }
 
   setInterval(colorRadio, 1000);
 
-  for (let i=1 ; i < 11 ; i++)  {
+  const playButtons = document.querySelectorAll('.CardWebRadio-playButton');
 
-    let playButton = "body > div > main > section.Home-webradios.g-block-margin.svelte-1sumafo.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-spuns4 > div > div:nth-child(";
-    playButton += i.toString();
-    playButton += ") > div > div > div > div.CardWebRadio-playButton.svelte-oxo44k";
-
-    document.querySelector(playButton).style.display = "none";
-  }
+  for (const button of playButtons) {
+  button.style.display = "none";
+}
 
 }, delay);
 
 
 function colorRadio() {
 
-  var textRadioLue = document.querySelector("#player > div.media.svelte-1i7nef6 > span").firstChild.data;  // obtenir texte de la radio lue en bas a gauche (innerHTML donne 5 lignes de trucs :/ )
+
+  var textRadioLue = document.querySelector(".line1").firstChild.data;  // obtenir texte de la radio lue en bas a gauche (innerHTML donne 5 lignes de trucs :/ )
 
   console.log(textRadioLue);
   var radioNumber=0;
@@ -112,64 +110,18 @@ function colorRadio() {
 
   console.log(radioNumber);
 
-  for (var i = 1 ; i < 11 ; i++)  {
+  var radiosToColor = document.querySelectorAll(".CardWebRadio-details");
 
-    let radioToColor = "body > div > main > section.Home-webradios.g-block-margin.svelte-1sumafo.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-spuns4 > div > div:nth-child(";
-    radioToColor += i.toString();
-    radioToColor += ") > div > div > a > div";
+  var n = 1;
 
-    document.querySelector(radioToColor).style.backgroundColor = "#2E2E2E";
-    if (radioNumber == i)  {
-      document.querySelector(radioToColor).style.backgroundColor = "blue";
+  for (const radio of radiosToColor)  {
+
+    radio.style.backgroundColor = "#2E2E2E";
+
+    if (radioNumber == n)  {
+      radio.style.backgroundColor = "blue";
     }
+    n++;
 
   }
-
-}  // colorRadio
-
-
-/* OLD
-
-function observe()  {
-
-  console.log("Appel observe");
-  let elementToObserve2 = document.querySelector("body > div:nth-child(3) > footer > div.StickyPlayer-wrapper.svelte-1o84z2t");
-  //let elementToObserve2 = document.querySelector("#player > div.media.svelte-4b2113");
-    let observer2 = new MutationObserver(colorRadio); // déclaration avec appel fonction
-
-    let options2 = {
-      childList: true,
-      attributes: true,
-      characterData: true,
-      subtree: true
-
-    };
-
-    observer2.observe(elementToObserve2, options2);
-
-}
-
-  if (raiseRadiosSections)  {
-    document.querySelector("body > div:nth-child(3) > main > section.Home-coverRadio").style.maxHeight = height;
-  }
-
-    let playButton = "body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-enrlw0 > div > div:nth-child(";
-    playButton += i.toString();
-    playButton += ") > div > div > div > div.CardWebRadio-playButton.svelte-1wsgm83";
-
-    let radioToColor = "body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-enrlw0 > div > div:nth-child(";
-    // entier : body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-enrlw0 > div > div:nth-child(4) > div > div > a > div
-    radioToColor += i.toString();
-    radioToColor += ") > div > div > a > div";
-
-  let radioToColor = "body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-enrlw0 > div > div:nth-child(4) > div > div > a > div";
-  document.querySelector("body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-enrlw0 > div > div:nth-child(4) > div > div > a > div").style.backgroundColor = "blue";
-  document.querySelector(radioToColor).style.backgroundColor = "blue";
-  */
-
-  //radioToColor.style.backgroundColor = "blue";
-
-  /* Fonctionne
-  let radioToColor = "body > div:nth-child(3) > main > section.Home-webradios.g-block-margin.svelte-19wlv8z.dark.isImmersive > div > div > div > div > div.Carousel-container.svelte-enrlw0 > div > div:nth-child(4) > div > div > a > div";
-  document.querySelector(radioToColor).style.backgroundColor = "blue";
-  */
+  
