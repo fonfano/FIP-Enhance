@@ -57,7 +57,7 @@ function colorRadio() {
 
   var textRadioLue = document.querySelector(".line1").firstChild.data;  // obtenir texte de la radio lue en bas a gauche (innerHTML donne 5 lignes de trucs :/ )
 
-  console.log(textRadioLue);
+  //console.log(textRadioLue);
   var radioNumber=0;
 
   switch (textRadioLue)  {
@@ -108,7 +108,7 @@ function colorRadio() {
 
   }
 
-  console.log(radioNumber);
+  //console.log(radioNumber);
 
   var radiosToColor = document.querySelectorAll(".CardWebRadio-details");
 
