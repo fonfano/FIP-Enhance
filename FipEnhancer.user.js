@@ -3,12 +3,13 @@
 // @namespace   github.com/fonfano
 // @match       https://www.radiofrance.fr/*
 // @grant       none
-// @version     0.8.0
+// @version     0.8.1
 // @author      Lt Ripley
 // @description Remove uggly play buttons, raise lower fip radios sections, colorize currently played radio
 // ==/UserScript==
 
 // Historique
+// 01-03-2023   0.8.1   Fix     :  New radios order
 // 20/02-2023   0.8.0   Redesign:  New way to select elements to allow working when new elements names appear.
 // 14/02/2023   0.7.5   Fix     :  For new elements names (one more time !)
 // 18/11/2022   0.7.4   Fix     :  For new elements names (one more time !)
@@ -79,15 +80,15 @@ function colorRadio() {
     break;
 
     case "FIP Metal" :
-    radioNumber = 4;
-    break;
-
-    case "FIP Hip-Hop" :
     radioNumber = 5;
     break;
 
-    case "FIP Pop" :
+    case "FIP Hip-Hop" :
     radioNumber = 6;
+    break;
+
+    case "FIP Pop" :
+    radioNumber = 4;
     break;
 
     case "FIP Electro" :
