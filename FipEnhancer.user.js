@@ -3,12 +3,13 @@
 // @namespace   github.com/fonfano
 // @match       https://www.radiofrance.fr/*
 // @grant       none
-// @version     0.8.2
+// @version     0.8.3
 // @author      Lt Ripley
 // @description Remove uggly play buttons, raise lower fip radios sections, colorize currently played radio
 // ==/UserScript==
 
 // Historique
+// 14-07-2023   0.8.3   Upgrade :  Removes hidden mode on Arts of radios.
 // 14-07-2023   0.8.2   Fix     :  For new FIP GUI
 // 01-03-2023   0.8.1   Fix     :  New radios order
 // 20/02-2023   0.8.0   Redesign:  New way to select elements to allow working when new elements names appear.
@@ -49,18 +50,47 @@ setTimeout(() => {
   button.style.display = "none";
 
   setInterval(colorRadio, 1000);
+  setInterval(deleteUgglyThings, 1000);
 
 }
 
 }, delay);
 
 
+function deleteUgglyThings()  {
+
+  /*let animation = document.querySelector("#main > section.Home-webradios.g-block-margin.fip.svelte-ekooah.isImmersive > div > div:nth-child(1) > div > button > div > div > div > div.WebradioButton-overlay-background.svelte-1ycr8m9 > div");
+
+  if (animation != null) {
+    animation.remove();
+  } */
+
+  let overlays = document.querySelectorAll(".WebradioButton-overlay-background.svelte-1ycr8m9");
+  for (const overlay of overlays) {
+    overlay.remove();
+  }
+
+  let hidden1 = document.querySelectorAll(".isSlightlyHidden");
+  for (const hidden of hidden1)  {
+    hidden.classList.remove("isSlightlyHidden");
+  }
+
+  let hidden2 = document.querySelector(".isPlaying");
+  hidden2.classList.remove("isPlaying");
+
+  /*let hidden2 = document.querySelectorAll("isPlaying");
+  for (const hidden of hidden2)  {
+    hidden.classList.remove("isPlaying");
+  }*/
+
+}
+
 
 function colorRadio() {
 
   var textRadioLue = document.querySelector(".media.svelte-1i7nef6 > span").firstChild.data;  // obtenir texte de la radio lue en bas a gauche (innerHTML donne 5 lignes de trucs :/ )
 
-  console.log(textRadioLue);
+  //console.log(textRadioLue);
   var radioNumber=0;
 
   switch (textRadioLue)  {
@@ -82,15 +112,15 @@ function colorRadio() {
     break;
 
     case "FIP Pop" :
-    radioNumber = 5;
+    radioNumber = 4;
     break;
 
     case "FIP Metal" :
-    radioNumber = 6;
+    radioNumber = 5;
     break;
 
     case "FIP Hip-Hop" :
-    radioNumber = 4;
+    radioNumber = 6;
     break;
 
     case "FIP Electro" :
@@ -116,6 +146,7 @@ function colorRadio() {
   //console.log(radioNumber);
 
   var radiosToColor = document.querySelectorAll(".WebradioButton-overlay-text.svelte-1ycr8m9 > div");
+
 
 
   var n = 1;
