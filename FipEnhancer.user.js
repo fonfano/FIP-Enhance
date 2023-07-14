@@ -3,12 +3,13 @@
 // @namespace   github.com/fonfano
 // @match       https://www.radiofrance.fr/*
 // @grant       none
-// @version     0.8.1
+// @version     0.8.2
 // @author      Lt Ripley
 // @description Remove uggly play buttons, raise lower fip radios sections, colorize currently played radio
 // ==/UserScript==
 
 // Historique
+// 14-07-2023   0.8.2   Fix     :  For new FIP GUI
 // 01-03-2023   0.8.1   Fix     :  New radios order
 // 20/02-2023   0.8.0   Redesign:  New way to select elements to allow working when new elements names appear.
 // 14/02/2023   0.7.5   Fix     :  For new elements names (one more time !)
@@ -32,7 +33,7 @@
 // Options
 let delay = 2500;                 // Time (in MS) before the script runs (waits the page to be fully loaded).  Increase if necessary.
 let raiseRadiosSections = true;   // Raises a little bit the lower FIP radios sections, to be able to read the text, especialy in case of MS Windows 125% display scale
-let scrollValue = 70;             // scroll (pixels)
+let scrollValue = 60;             // scroll (pixels)
 // let height = "480px";          // Height (decrease to raise).  Deprecated
 // End of options
 
@@ -42,23 +43,24 @@ setTimeout(() => {
     window.scroll(0, scrollValue); // x,y en pixels
   }
 
-  setInterval(colorRadio, 1000);
-
-  const playButtons = document.querySelectorAll('.CardWebRadio-playButton');
+  const playButtons = document.querySelectorAll('.WebradioButton-remote-state.svelte-1ycr8m9');
 
   for (const button of playButtons) {
   button.style.display = "none";
+
+  setInterval(colorRadio, 1000);
+
 }
 
 }, delay);
 
 
+
 function colorRadio() {
 
+  var textRadioLue = document.querySelector(".media.svelte-1i7nef6 > span").firstChild.data;  // obtenir texte de la radio lue en bas a gauche (innerHTML donne 5 lignes de trucs :/ )
 
-  var textRadioLue = document.querySelector(".line1").firstChild.data;  // obtenir texte de la radio lue en bas a gauche (innerHTML donne 5 lignes de trucs :/ )
-
-  //console.log(textRadioLue);
+  console.log(textRadioLue);
   var radioNumber=0;
 
   switch (textRadioLue)  {
@@ -79,15 +81,15 @@ function colorRadio() {
     radioNumber = 3;
     break;
 
-    case "FIP Metal" :
+    case "FIP Pop" :
     radioNumber = 5;
     break;
 
-    case "FIP Hip-Hop" :
+    case "FIP Metal" :
     radioNumber = 6;
     break;
 
-    case "FIP Pop" :
+    case "FIP Hip-Hop" :
     radioNumber = 4;
     break;
 
@@ -107,20 +109,24 @@ function colorRadio() {
     radioNumber = 10;
     break;
 
+
   }
+   radioNumber++;
 
   //console.log(radioNumber);
 
-  var radiosToColor = document.querySelectorAll(".CardWebRadio-details");
+  var radiosToColor = document.querySelectorAll(".WebradioButton-overlay-text.svelte-1ycr8m9 > div");
+
 
   var n = 1;
 
   for (const radio of radiosToColor)  {
 
-    radio.style.backgroundColor = "#2E2E2E";
+    radio.style.color = "#FFFFFF";
 
     if (radioNumber == n)  {
-      radio.style.backgroundColor = "blue";
+
+      radio.style.color = "blue";
     }
     n++;
 
