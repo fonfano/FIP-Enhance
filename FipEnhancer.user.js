@@ -3,13 +3,14 @@
 // @namespace   github.com/fonfano
 // @match       https://www.radiofrance.fr/*
 // @grant       none
-// @version     0.8.3
+// @version     0.8.4
 // @author      Lt Ripley
 // @description Remove uggly play buttons, raise lower fip radios sections, colorize currently played radio
 // ==/UserScript==
 
 // Historique
-// 14-07-2023   0.8.3   Upgrade :  Removes hidden mode on Arts of radios.
+// 17-07-2023   0.8.4   Upgrade :  Color artist name of current radio
+// 14-07-2023   0.8.3   Upgrade :  Removes slightly hidden modes on Arts of radios.
 // 14-07-2023   0.8.2   Fix     :  For new FIP GUI
 // 01-03-2023   0.8.1   Fix     :  New radios order
 // 20/02-2023   0.8.0   Redesign:  New way to select elements to allow working when new elements names appear.
@@ -35,7 +36,6 @@
 let delay = 2500;                 // Time (in MS) before the script runs (waits the page to be fully loaded).  Increase if necessary.
 let raiseRadiosSections = true;   // Raises a little bit the lower FIP radios sections, to be able to read the text, especialy in case of MS Windows 125% display scale
 let scrollValue = 60;             // scroll (pixels)
-// let height = "480px";          // Height (decrease to raise).  Deprecated
 // End of options
 
 setTimeout(() => {
@@ -48,22 +48,15 @@ setTimeout(() => {
 
   for (const button of playButtons) {
   button.style.display = "none";
+  }
 
   setInterval(colorRadio, 1000);
   setInterval(deleteUgglyThings, 1000);
-
-}
 
 }, delay);
 
 
 function deleteUgglyThings()  {
-
-  /*let animation = document.querySelector("#main > section.Home-webradios.g-block-margin.fip.svelte-ekooah.isImmersive > div > div:nth-child(1) > div > button > div > div > div > div.WebradioButton-overlay-background.svelte-1ycr8m9 > div");
-
-  if (animation != null) {
-    animation.remove();
-  } */
 
   let overlays = document.querySelectorAll(".WebradioButton-overlay-background.svelte-1ycr8m9");
   for (const overlay of overlays) {
@@ -76,12 +69,9 @@ function deleteUgglyThings()  {
   }
 
   let hidden2 = document.querySelector(".isPlaying");
-  hidden2.classList.remove("isPlaying");
-
-  /*let hidden2 = document.querySelectorAll("isPlaying");
-  for (const hidden of hidden2)  {
-    hidden.classList.remove("isPlaying");
-  }*/
+  if (hidden2 != null) {
+    hidden2.classList.remove("isPlaying");
+  }
 
 }
 
@@ -141,26 +131,39 @@ function colorRadio() {
 
 
   }
-   radioNumber++;
-
-  //console.log(radioNumber);
-
-  var radiosToColor = document.querySelectorAll(".WebradioButton-overlay-text.svelte-1ycr8m9 > div");
 
 
+  //Colorer la radio en cours
+  let radios = document.querySelectorAll(".WebradioButton-overlay-text.svelte-1ycr8m9 > div");
 
-  var n = 1;
+  let n = 0;
 
-  for (const radio of radiosToColor)  {
+  for (const radio of radios)  {
 
     radio.style.color = "#FFFFFF";
 
     if (radioNumber == n)  {
 
-      radio.style.color = "blue";
+      radio.style.color = "#FF6600";
     }
     n++;
+  }
 
+
+  // Colorer l'artiste de la radio en cours
+  let artists = document.querySelectorAll(".WebradioButton-overlay-text.svelte-1ycr8m9 > span");
+
+  let n2 = 0;
+
+  for (const artist of artists)  {
+
+    artist.style.color = "#FFFFFF";
+
+    if (radioNumber == n2)  {
+
+      artist.style.color = "#FF6600";
+    }
+    n2++;
   }
 
 }
