@@ -3,12 +3,13 @@
 // @namespace   github.com/fonfano
 // @match       https://www.radiofrance.fr/*
 // @grant       none
-// @version     0.8.4
+// @version     0.8.5
 // @author      Lt Ripley
 // @description Remove uggly play buttons, raise lower fip radios sections, colorize currently played radio
 // ==/UserScript==
 
 // Historique
+// 29-07-2023   0.8.5   Redesign:  New way to raise
 // 17-07-2023   0.8.4   Upgrade :  Color artist name of current radio
 // 14-07-2023   0.8.3   Upgrade :  Removes slightly hidden modes on Arts of radios.
 // 14-07-2023   0.8.2   Fix     :  For new FIP GUI
@@ -35,14 +36,18 @@
 // Options
 let delay = 2500;                 // Time (in MS) before the script runs (waits the page to be fully loaded).  Increase if necessary.
 let raiseRadiosSections = true;   // Raises a little bit the lower FIP radios sections, to be able to read the text, especialy in case of MS Windows 125% display scale
-let scrollValue = 60;             // scroll (pixels)
+let hautHeight = "40px";          // Hauteur du header
+//let scrollValue = 60;  // OLD   // scroll (pixels)
 // End of options
 
 setTimeout(() => {
 
   if (raiseRadiosSections)  {
-    window.scroll(0, scrollValue); // x,y en pixels
+    let haut = document.querySelector("body > div > header");
+    haut.style.maxHeight = hautHeight;
+    //window.scroll(0, scrollValue); // x,y en pixels // OLD
   }
+
 
   const playButtons = document.querySelectorAll('.WebradioButton-remote-state.svelte-1ycr8m9');
 
