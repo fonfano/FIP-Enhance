@@ -3,14 +3,15 @@
 // @namespace   github.com/fonfano
 // @match       https://www.radiofrance.fr/*
 // @grant       none
-// @version     0.8.5
+// @version     0.8.6
 // @author      Lt Ripley
 // @description Remove uggly play buttons, raise lower fip radios sections, colorize currently played radio
 // ==/UserScript==
 
 // Historique
-// 29-07-2023   0.8.5   Redesign:  New way to raise
-// 17-07-2023   0.8.4   Upgrade :  Color artist name of current radio
+// 05-08-2023   0.8.6   Update  :  Added a specific function to hide play buttons on radios
+// 29-07-2023   0.8.5   Upgrade :  New way to raise
+// 17-07-2023   0.8.4   Upgrade :  Colorize artist name of current radio
 // 14-07-2023   0.8.3   Upgrade :  Removes slightly hidden modes on Arts of radios.
 // 14-07-2023   0.8.2   Fix     :  For new FIP GUI
 // 01-03-2023   0.8.1   Fix     :  New radios order
@@ -36,29 +37,33 @@
 // Options
 let delay = 2500;                 // Time (in MS) before the script runs (waits the page to be fully loaded).  Increase if necessary.
 let raiseRadiosSections = true;   // Raises a little bit the lower FIP radios sections, to be able to read the text, especialy in case of MS Windows 125% display scale
-let hautHeight = "40px";          // Hauteur du header
-//let scrollValue = 60;  // OLD   // scroll (pixels)
+let headerHeight = "40px";        // Hauteur du header
 // End of options
+
 
 setTimeout(() => {
 
   if (raiseRadiosSections)  {
-    let haut = document.querySelector("body > div > header");
-    haut.style.maxHeight = hautHeight;
+    let header = document.querySelector("body > div > header");
+    header.style.maxHeight = headerHeight;
     //window.scroll(0, scrollValue); // x,y en pixels // OLD
   }
 
-
-  const playButtons = document.querySelectorAll('.WebradioButton-remote-state.svelte-1ycr8m9');
-
-  for (const button of playButtons) {
-  button.style.display = "none";
-  }
+  removePlayButtons();
 
   setInterval(colorRadio, 1000);
   setInterval(deleteUgglyThings, 1000);
 
 }, delay);
+
+
+function removePlayButtons() {
+
+  const playButtons = document.querySelectorAll('.WebradioButton-remote-state.svelte-1ycr8m9');
+  for (const button of playButtons) {
+  button.style.display = "none";
+  }
+}
 
 
 function deleteUgglyThings()  {
@@ -77,7 +82,6 @@ function deleteUgglyThings()  {
   if (hidden2 != null) {
     hidden2.classList.remove("isPlaying");
   }
-
 }
 
 
@@ -85,7 +89,6 @@ function colorRadio() {
 
   var textRadioLue = document.querySelector(".media.svelte-1i7nef6 > span").firstChild.data;  // obtenir texte de la radio lue en bas a gauche (innerHTML donne 5 lignes de trucs :/ )
 
-  //console.log(textRadioLue);
   var radioNumber=0;
 
   switch (textRadioLue)  {
@@ -170,5 +173,4 @@ function colorRadio() {
     }
     n2++;
   }
-
 }
