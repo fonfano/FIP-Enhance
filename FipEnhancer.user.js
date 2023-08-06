@@ -3,13 +3,14 @@
 // @namespace   github.com/fonfano
 // @match       https://www.radiofrance.fr/*
 // @grant       none
-// @version     0.8.6
+// @version     0.8.7
 // @author      Lt Ripley
 // @description Remove uggly play buttons, raise lower fip radios sections, colorize currently played radio
 // ==/UserScript==
 
 // Historique
-// 05-08-2023   0.8.6   Update  :  Added a specific function to hide play buttons on radios
+// 06-08-2023   0.8.7   Update  :  Added focus detection to reduce costs
+// 05-08-2023   0.8.6   Update  :  Added a dedicated function to hide play buttons on radios
 // 29-07-2023   0.8.5   Upgrade :  New way to raise
 // 17-07-2023   0.8.4   Upgrade :  Colorize artist name of current radio
 // 14-07-2023   0.8.3   Upgrade :  Removes slightly hidden modes on Arts of radios.
@@ -35,26 +36,43 @@
 // 07/01/2022   0.1     Creation
 
 // Options
-let delay = 2500;                 // Time (in MS) before the script runs (waits the page to be fully loaded).  Increase if necessary.
+let delay = 2200;                 // Time (in MS) before the script runs (waits the page to be fully loaded).  Increase if necessary.
 let raiseRadiosSections = true;   // Raises a little bit the lower FIP radios sections, to be able to read the text, especialy in case of MS Windows 125% display scale
 let headerHeight = "40px";        // Hauteur du header
 // End of options
 
+
+var color;
+var uggly;
 
 setTimeout(() => {
 
   if (raiseRadiosSections)  {
     let header = document.querySelector("body > div > header");
     header.style.maxHeight = headerHeight;
-    //window.scroll(0, scrollValue); // x,y en pixels // OLD
   }
 
   removePlayButtons();
 
-  setInterval(colorRadio, 1000);
-  setInterval(deleteUgglyThings, 1000);
+  color = setInterval(function() {colorRadio()}, 1000);
+  uggly = setInterval(function() {deleteUgglyThings()}, 1000);
 
 }, delay);
+
+
+window.addEventListener('focus', function() {  //reçois le focus
+
+  color = setInterval(function() {colorRadio()}, 1000);
+  uggly = setInterval(function() {deleteUgglyThings()}, 1000);
+  //console.log("reçois le focus");
+});
+
+window.addEventListener('blur', function() {  //perd le focus
+
+  clearInterval(color);
+  clearInterval(uggly);
+  //console.log("perd le focus");
+});
 
 
 function removePlayButtons() {
@@ -86,6 +104,8 @@ function deleteUgglyThings()  {
 
 
 function colorRadio() {
+
+  console.log("tests focus");
 
   var textRadioLue = document.querySelector(".media.svelte-1i7nef6 > span").firstChild.data;  // obtenir texte de la radio lue en bas a gauche (innerHTML donne 5 lignes de trucs :/ )
 
