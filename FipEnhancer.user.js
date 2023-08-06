@@ -3,12 +3,13 @@
 // @namespace   github.com/fonfano
 // @match       https://www.radiofrance.fr/*
 // @grant       none
-// @version     0.8.7
+// @version     0.8.8
 // @author      Lt Ripley
-// @description Remove uggly play buttons, raise lower fip radios sections, colorize currently played radio
+// @description Remove uggly play buttons, raise lower fip radios sections, colorize currently played radio and artist name
 // ==/UserScript==
 
 // Historique
+// 06-08-2023   0.8.8   Update  :  Added clic detection to reduce costs (removed focus detection).  Also reduced delay (delay to wait the page to be loaded)
 // 06-08-2023   0.8.7   Update  :  Added focus detection to reduce costs
 // 05-08-2023   0.8.6   Update  :  Added a dedicated function to hide play buttons on radios
 // 29-07-2023   0.8.5   Upgrade :  New way to raise
@@ -36,14 +37,12 @@
 // 07/01/2022   0.1     Creation
 
 // Options
-let delay = 2200;                 // Time (in MS) before the script runs (waits the page to be fully loaded).  Increase if necessary.
+let delay = 1200;                 // Time (in MS) before the script runs (waits the page to be fully loaded).  Increase if necessary.
 let raiseRadiosSections = true;   // Raises a little bit the lower FIP radios sections, to be able to read the text, especialy in case of MS Windows 125% display scale
 let headerHeight = "40px";        // Hauteur du header
 // End of options
 
 
-var color;
-var uggly;
 
 setTimeout(() => {
 
@@ -54,25 +53,15 @@ setTimeout(() => {
 
   removePlayButtons();
 
-  color = setInterval(function() {colorRadio()}, 1000);
-  uggly = setInterval(function() {deleteUgglyThings()}, 1000);
-
+  document.addEventListener('click', function(event) {  //detection clic sur la page
+    setTimeout(() => {
+      deleteUgglyThings();
+      colorRadio();
+      //console.log("Clic detecté");
+    }, 200);
+  });
 }, delay);
 
-
-window.addEventListener('focus', function() {  //reçois le focus
-
-  color = setInterval(function() {colorRadio()}, 1000);
-  uggly = setInterval(function() {deleteUgglyThings()}, 1000);
-  //console.log("reçois le focus");
-});
-
-window.addEventListener('blur', function() {  //perd le focus
-
-  clearInterval(color);
-  clearInterval(uggly);
-  //console.log("perd le focus");
-});
 
 
 function removePlayButtons() {
@@ -105,7 +94,7 @@ function deleteUgglyThings()  {
 
 function colorRadio() {
 
-  console.log("tests focus");
+  //console.log("tests focus");
 
   var textRadioLue = document.querySelector(".media.svelte-1i7nef6 > span").firstChild.data;  // obtenir texte de la radio lue en bas a gauche (innerHTML donne 5 lignes de trucs :/ )
 
@@ -156,10 +145,7 @@ function colorRadio() {
     case "FIP Nouveautés" :
     radioNumber = 10;
     break;
-
-
   }
-
 
   //Colorer la radio en cours
   let radios = document.querySelectorAll(".WebradioButton-overlay-text.svelte-1ycr8m9 > div");
@@ -176,7 +162,6 @@ function colorRadio() {
     }
     n++;
   }
-
 
   // Colorer l'artiste de la radio en cours
   let artists = document.querySelectorAll(".WebradioButton-overlay-text.svelte-1ycr8m9 > span");
