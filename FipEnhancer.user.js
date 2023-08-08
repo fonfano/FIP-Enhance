@@ -5,7 +5,7 @@
 // @grant       none
 // @version     0.8.9
 // @author      Lt Ripley
-// @description Remove uggly play buttons, raise lower fip radios sections, colorize currently played radio name and artist name
+// @description Remove uggly play buttons, raise lower fip radios sections, add a border to currently played radio
 // ==/UserScript==
 
 // Historique
