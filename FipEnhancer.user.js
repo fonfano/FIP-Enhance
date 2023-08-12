@@ -3,12 +3,13 @@
 // @namespace   github.com/fonfano
 // @match       https://www.radiofrance.fr/*
 // @grant       none
-// @version     0.8.9
+// @version     0.9.0
 // @author      Lt Ripley
-// @description Remove uggly play buttons, raise lower fip radios sections, add a border to currently played radio
+// @description Remove uggly play buttons on arts, raise lower fip radios sections, add border to currently played radio
 // ==/UserScript==
 
 // Historique
+// 09-08-2023   0.9.0   Update  :  Added blinking mode for border, with option.
 // 08-08-2023   0.8.9   Update  :  Added a border to playing radio and removed colorRadio function
 // 06-08-2023   0.8.8   Update  :  Added clic detection to reduce costs (removed focus detection).  Also reduced delay (delay to wait the page to be loaded)
 // 06-08-2023   0.8.7   Update  :  Added focus detection to reduce costs
@@ -38,30 +39,41 @@
 // 07/01/2022   0.1     Creation
 
 // Options
-let delay = 1500;                 // Time (in MS) before the script runs (to wait the page to be fully loaded).  Increase if necessary.
-let raiseRadiosSections = true;   // Raises a little bit the lower FIP radios sections, to be able to read the text, especialy in case of MS Windows 125% display scale
-let headerHeight = "40px";        // Hauteur du header
+let delay = 700;                  // Time (in MS) before the script runs (to wait the page to be fully loaded).  Increase if the scripts doesn't work.
+let raiseRadiosSections = true;   // Raises a little bit the lower FIP radios sections, to be able to read the text, especialy in case of MS Windows 125% display scale. True = enabled, false = disabled
+let headerHeight = "40px";        // header height.  You can increase or decrease to adjust radio section height
+let border = "3px";               // Border thickness
+let borderBlinkBool = true;       // Blinking border.  True = yes, False = no
 // End of options
 
 
+border +=" dashed white";
+var borderVisible = true;  // to blink
+var a;                     // to blink
+var b;                     //
+var dual = true;           //
 
-setTimeout(() => {
 
-  if (raiseRadiosSections)  {
-    let header = document.querySelector("body > div > header");
-    header.style.maxHeight = headerHeight;
-  }
+window.addEventListener("load", (event) => {  // Censé attendre que la page soit complètement chargée
 
-  removePlayButtons();
+  setTimeout(() => {
 
-  document.addEventListener('click', function(event) {  //detection clic sur la page
-    setTimeout(() => {
-      deleteUgglyThings();
-      radioBorder();
-    }, 200);
-  });
+    if (raiseRadiosSections)  {
+      let header = document.querySelector("body > div > header");
+      header.style.maxHeight = headerHeight;
+    }
 
-}, delay);
+    removePlayButtons();
+
+    document.addEventListener('click', function(event) {  //detection clic sur la page
+      setTimeout(() => {
+        deleteUgglyThings();
+        radioBorder();
+      }, 200);
+    });
+
+  }, delay);
+});
 
 
 
@@ -96,55 +108,34 @@ function deleteUgglyThings()  {
 
 function radioBorder()  {
 
-  var textRadioLue = document.querySelector(".media.svelte-1i7nef6 > span").firstChild.data;  // obtenir texte de la radio lue en bas a gauche (innerHTML donne 5 lignes de trucs :/ )
+  let textRadioLue = document.querySelector(".media.svelte-1i7nef6 > span").firstChild.data;  // obtenir texte de la radio lue en bas a gauche (innerHTML donne 5 lignes de trucs :/ )
 
-  var radioNumber=0;
+  let radioNumber=0;
 
   switch (textRadioLue)  {
 
-    case "FIP" :
-    radioNumber = 0;
-    break;
+    case "FIP" : radioNumber = 0; break;
 
-    case "FIP Rock" :
-    radioNumber = 1;
-    break;
+    case "FIP Rock" : radioNumber = 1; break;
 
-    case "FIP Jazz" :
-    radioNumber = 2;
-    break;
+    case "FIP Jazz" : radioNumber = 2; break;
 
-    case "FIP Groove" :
-    radioNumber = 3;
-    break;
+    case "FIP Groove" : radioNumber = 3; break;
 
-    case "FIP Pop" :
-    radioNumber = 4;
-    break;
+    case "FIP Pop" : radioNumber = 4; break;
 
-    case "FIP Metal" :
-    radioNumber = 5;
-    break;
+    case "FIP Metal" : radioNumber = 5; break;
 
-    case "FIP Hip-Hop" :
-    radioNumber = 6;
-    break;
+    case "FIP Hip-Hop" : radioNumber = 6; break;
 
-    case "FIP Electro" :
-    radioNumber = 7;
-    break;
+    case "FIP Electro" : radioNumber = 7; break;
 
-    case "FIP Monde" :
-    radioNumber = 8;
-    break;
+    case "FIP Monde" : radioNumber = 8; break;
 
-    case "FIP Reggae" :
-    radioNumber = 9;
-    break;
+    case "FIP Reggae" : radioNumber = 9; break;
 
-    case "FIP Nouveautés" :
-    radioNumber = 10;
-    break;
+    case "FIP Nouveautés" : radioNumber = 10; break;
+
   }
 
 
@@ -153,16 +144,60 @@ function radioBorder()  {
   let n = 0;
 
   for (const radio of radios)  {
-    //console.log("border making");
+
     radio.style.border = "none";
+
     if (n == radioNumber) {
-    radio.style.border = "4px solid white";
-    radio.style.borderRadius = "8px";
+
+      if (!borderBlinkBool) {
+        radio.style.border = border;
+        radio.style.borderRadius = "8px";
+      }
+
+      // blinking mode.  Need "dual" boolean to switch between a and b to be able to clearInterval
+      else {
+        if (dual) {
+          clearInterval(b);
+          a = setInterval(function() {
+            //console.log ("testA");
+            borderBlink(radio);
+          }, 1000);
+          dual = !dual;
+        }
+
+        else {
+          clearInterval(a);
+          b = setInterval(function() {
+            //console.log ("testB");
+            borderBlink(radio);
+          }, 1000);
+          dual = !dual;
+        }
+      }
+
     }
+
     n++;
   }
 
 }
+
+
+function borderBlink(radio)  {
+
+  if (borderVisible) {
+    radio.style.border = border;
+    radio.style.borderRadius = "8px";
+    borderVisible = !borderVisible;
+  }
+  else  {
+    radio.style.border = "none";
+    borderVisible = !borderVisible;
+  }
+
+
+}
+
 
 
 // Deprecated
