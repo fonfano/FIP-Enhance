@@ -3,12 +3,13 @@
 // @namespace   github.com/fonfano
 // @match       https://www.radiofrance.fr/*
 // @grant       none
-// @version     0.9.0
+// @version     0.9.1
 // @author      Lt Ripley
 // @description Remove uggly play buttons on arts, raise lower fip radios sections, add border to currently played radio
 // ==/UserScript==
 
 // Historique
+// 28-08-2023   0.9.1   Update  :  Added new radio (Sacré Français).
 // 09-08-2023   0.9.0   Update  :  Added blinking mode for border, with option.
 // 08-08-2023   0.8.9   Update  :  Added a border to playing radio and removed colorRadio function
 // 06-08-2023   0.8.8   Update  :  Added clic detection to reduce costs (removed focus detection).  Also reduced delay (delay to wait the page to be loaded)
@@ -39,11 +40,11 @@
 // 07/01/2022   0.1     Creation
 
 // Options
-let delay = 700;                  // Time (in MS) before the script runs (to wait the page to be fully loaded).  Increase if the scripts doesn't work.
+let delay = 1000;                 // Time (in MS) before the script runs (to wait the page to be fully loaded).  Increase if the scripts doesn't work.
 let raiseRadiosSections = true;   // Raises a little bit the lower FIP radios sections, to be able to read the text, especialy in case of MS Windows 125% display scale. True = enabled, false = disabled
-let headerHeight = "40px";        // header height.  You can increase or decrease to adjust radio section height
+let headerHeight = "40px";        // header height.  You can increase or decrease to adjust radio section position
 let border = "3px";               // Border thickness
-let borderBlinkBool = true;       // Blinking border.  True = yes, False = no
+let borderBlinkBool = true;       // Blinking border.  true = yes, false = no
 // End of options
 
 
@@ -136,6 +137,7 @@ function radioBorder()  {
 
     case "FIP Nouveautés" : radioNumber = 10; break;
 
+    case "FIP Sacré Français !" : radioNumber = 11; break;
   }
 
 
@@ -198,93 +200,3 @@ function borderBlink(radio)  {
 
 }
 
-
-
-// Deprecated
-/*
-function colorRadio() {
-
-  var textRadioLue = document.querySelector(".media.svelte-1i7nef6 > span").firstChild.data;  // obtenir texte de la radio lue en bas a gauche (innerHTML donne 5 lignes de trucs :/ )
-
-  var radioNumber=0;
-
-  switch (textRadioLue)  {
-
-    case "FIP" :
-    radioNumber = 0;
-    break;
-
-    case "FIP Rock" :
-    radioNumber = 1;
-    break;
-
-    case "FIP Jazz" :
-    radioNumber = 2;
-    break;
-
-    case "FIP Groove" :
-    radioNumber = 3;
-    break;
-
-    case "FIP Pop" :
-    radioNumber = 4;
-    break;
-
-    case "FIP Metal" :
-    radioNumber = 5;
-    break;
-
-    case "FIP Hip-Hop" :
-    radioNumber = 6;
-    break;
-
-    case "FIP Electro" :
-    radioNumber = 7;
-    break;
-
-    case "FIP Monde" :
-    radioNumber = 8;
-    break;
-
-    case "FIP Reggae" :
-    radioNumber = 9;
-    break;
-
-    case "FIP Nouveautés" :
-    radioNumber = 10;
-    break;
-  }
-
-  //Colorer la radio en cours
-  let radios = document.querySelectorAll(".WebradioButton-overlay-text.svelte-1ycr8m9 > div");
-
-  let n = 0;
-
-  for (const radio of radios)  {
-
-    radio.style.color = "#FFFFFF";
-
-    if (radioNumber == n)  {
-
-      radio.style.color = "#FF6600";
-    }
-    n++;
-  }
-
-  // Colorer l'artiste de la radio en cours
-  let artists = document.querySelectorAll(".WebradioButton-overlay-text.svelte-1ycr8m9 > span");
-
-  let n2 = 0;
-
-  for (const artist of artists)  {
-
-    artist.style.color = "#FFFFFF";
-
-    if (radioNumber == n2)  {
-
-      artist.style.color = "#FF6600";
-    }
-    n2++;
-  }
-}
-*/
