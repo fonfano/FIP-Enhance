@@ -9,7 +9,7 @@
 // ==/UserScript==
 
 // Historique
-// 07-10-2023   0.9.3   Update  :  For new buttons names and delete new animation on played radio
+// 07-10-2023   0.9.3   Update  :  For new buttons and animated overlay names
 // 29-08-2023   0.9.2   Update  :  New radios order
 // 28-08-2023   0.9.1   Update  :  Added new radio (Sacré Français).
 // 09-08-2023   0.9.0   Update  :  Added blinking mode for border, with option.
@@ -87,17 +87,12 @@ function removePlayButtons() {
   //button.style.display = "none";
     button.remove();
   }
-  
-  const playGraph = document.querySelectorAll('.WebradioButton-overlay-background.svelte-18lspnn')
-  for (const graph of playGraph) {
-    graph.remove();
-  }
 }
 
 
 function deleteUgglyThings()  {
 
-  let overlays = document.querySelectorAll(".WebradioButton-overlay-background.svelte-1ycr8m9");
+  let overlays = document.querySelectorAll(".WebradioButton-overlay-background.svelte-18lspnn");
   for (const overlay of overlays) {
     overlay.remove();
   }
