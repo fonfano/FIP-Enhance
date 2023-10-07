@@ -3,12 +3,13 @@
 // @namespace   github.com/fonfano
 // @match       https://www.radiofrance.fr/*
 // @grant       none
-// @version     0.9.2
+// @version     0.9.3
 // @author      Lt Ripley
 // @description Remove uggly play buttons on arts, raise lower fip radios sections, add border to currently played radio
 // ==/UserScript==
 
 // Historique
+// 07-10-2023   0.9.3   Update  :  For new buttons names
 // 29-08-2023   0.9.2   Update  :  New radios order
 // 28-08-2023   0.9.1   Update  :  Added new radio (Sacré Français).
 // 09-08-2023   0.9.0   Update  :  Added blinking mode for border, with option.
@@ -81,7 +82,8 @@ window.addEventListener("load", (event) => {  // Censé attendre que la page soi
 
 function removePlayButtons() {
 
-  const playButtons = document.querySelectorAll('.WebradioButton-remote-state.svelte-1ycr8m9');
+  const playButtons = document.querySelectorAll('.WebradioButton-remote-state.svelte-18lspnn')
+  
   for (const button of playButtons) {
   //button.style.display = "none";
     button.remove();
