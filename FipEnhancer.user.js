@@ -3,12 +3,13 @@
 // @namespace   github.com/fonfano
 // @match       https://www.radiofrance.fr/*
 // @grant       none
-// @version     0.9.3
+// @version     0.9.4
 // @author      Lt Ripley
 // @description Remove uggly play buttons on arts, raise lower fip radios sections, add border to currently played radio
 // ==/UserScript==
 
 // Historique
+// 12-10-2023   0.9.4   Update  :  For new radios order
 // 07-10-2023   0.9.3   Update  :  For new buttons and animated overlay names
 // 29-08-2023   0.9.2   Update  :  New radios order
 // 28-08-2023   0.9.1   Update  :  Added new radio (Sacré Français).
@@ -119,27 +120,27 @@ function radioBorder()  {
 
     case "FIP" : radioNumber = 0; break;
 
-    case "FIP Sacré Français !" : radioNumber = 1; break;
+    case "FIP Rock" : radioNumber = 1; break;
 
-    case "FIP Rock" : radioNumber = 2; break;
+    case "FIP Jazz" : radioNumber = 2; break;
 
-    case "FIP Jazz" : radioNumber = 3; break;
+    case "FIP Groove" : radioNumber = 3; break;
 
-    case "FIP Groove" : radioNumber = 4; break;
+    case "FIP Monde" : radioNumber = 4; break;
 
-    case "FIP Reggae" : radioNumber = 5; break;
+    case "FIP Nouveautés" : radioNumber = 5; break;
 
-    case "FIP Pop" : radioNumber = 6; break;
+    case "FIP Reggae" : radioNumber = 6; break;
 
     case "FIP Electro" : radioNumber = 7; break;
 
-    case "FIP Monde" : radioNumber = 8; break;
+    case "FIP Metal" : radioNumber = 8; break;
 
-    case "FIP Nouveautés" : radioNumber = 9; break;
+    case "FIP Pop" : radioNumber = 9; break;
 
-    case "FIP Metal" : radioNumber = 10; break;
+    case "FIP Hip-Hop" : radioNumber = 10; break;
 
-    case "FIP Hip-Hop" : radioNumber = 11; break;
+    case "FIP Sacré Français !" : radioNumber = 11; break;
 
   }
 
